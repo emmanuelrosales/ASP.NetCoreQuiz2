@@ -1,0 +1,125 @@
+﻿@model IPagedList<Northwind.Store.Model.Order>
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@using X.PagedList.Web.Common
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model =>  model[0].OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].RequiredDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].ShippedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Freight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].ShipName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].ShipAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].ShipCity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].ShipRegion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].ShipPostalCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].ShipCountry)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Customer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Employee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].ShipViaNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequiredDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShippedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Freight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShipName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShipAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShipCity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShipRegion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShipPostalCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShipCountry)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customer.CustomerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employee.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShipViaNavigation.CompanyName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.OrderId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.OrderId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
+    new PagedListRenderOptions
+        {
+        LiElementClasses = new string[] { "page-item" },
+        PageClasses = new string[] { "page-link" }
+    })
+@*<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" asp-action="Index" asp-route-currentPageIndex="@ViewData["CurrentPage"]">@ViewData["CurrentPage"]</a></li>
+        <li class="page-item"><a class="page-link" asp-action="Index" asp-route-currentPageIndex="@((int)ViewData["CurrentPage"] + 1)">@((int)ViewData["CurrentPage"] + 1)</a></li>
+        <li class="page-item"><a class="page-link" asp-action="Index" asp-route-currentPageIndex="@((int)ViewData["CurrentPage"] + 2)">@((int)ViewData["CurrentPage"] + 2)</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
+</nav>*@

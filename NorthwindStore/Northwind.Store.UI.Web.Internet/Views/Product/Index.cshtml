@@ -1,0 +1,50 @@
+﻿@model IPagedList<Northwind.Store.Model.Product>
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@using X.PagedList.Web.Common
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<form asp-action="Index">
+    <div class="mb-3">
+        <input id="filter" name="filter" class="form-control" value="@(ViewBag.txtsearch ?? String.Empty)" placeholder="Search filter ...">
+        <br />
+        <button type="submit" asp-controller="Product" class="btn btn-primary">Search</button>
+    </div>
+</form>
+@if (Model != null && Model.Count() > 0)
+{
+    <ul class="list-group">
+        @foreach (var item in Model)
+        {
+            <a asp-action="Details" asp-route-id="@item.ProductId">
+            <li class="list-group-item">@Html.DisplayFor(modelItem => item.ProductName)
+                <div>@Html.DisplayFor(modelItem => item.UnitPrice)</div>
+                <div>@Html.DisplayFor(modelItem => item.Category.CategoryName)</div>
+                @{
+                        if (@item.Category.PictureBase64 != null)
+                        {
+                        <img src="@item.Category.PictureBase64" alt="Imagen de @item.ProductName" id="imageList" />
+                        }
+                }
+               
+            </li></a>
+        }
+    </ul>
+}
+else
+{
+    <h3>No results! 😮</h3>
+}
+<br />
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
+    new PagedListRenderOptions
+        {
+        UlElementClasses  = new string[] { "pagination justify-content-center" },
+        LiElementClasses = new string[] { "page-item" },
+        PageClasses = new string[] { "page-link" },
+        MaximumPageNumbersToDisplay = 4
+    })
